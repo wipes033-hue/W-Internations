@@ -1,17 +1,60 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ChevronRight, ChevronDown, Menu, X, ChevronLeft } from "lucide-react"
+import { ChevronRight, ChevronDown, Menu, X, ChevronLeft, Send  } from "lucide-react"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import React, { useRef } from "react";
 
 export default function HomePage() {
   const [open, setOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0)
   const [itemsPerView, setItemsPerView] = useState(5) // Default for large screens
+
+    const form = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(form.current!);
+
+    const firstName = formData.get("first_name") as string;
+    const lastName = formData.get("last_name") as string;
+    const email = formData.get("email") as string;
+    const phone = formData.get("phone") as string;
+    const subject = formData.get("subject") as string;
+    const message = formData.get("message") as string;
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          phone,
+          subject,
+          message,
+        }),
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully ✅");
+        form.current?.reset();
+      } else {
+        alert("Failed to send message ❌");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Something went wrong ❌");
+    }
+  };
+
+
 
   const galleryImages = [
     "/assets/bussiness-wipes.png",
@@ -293,28 +336,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Vision and Mission Section */}
-      <section className="py-8 md:py-12 relative">
-        <div className="flex flex-col md:flex-row min-h-[300px]">
-          {/* Vision Section - Left side with gradient */}
-          <div className="md:w-1/2 bg-gradient-to-r from-[#2DD8E5] to-transparent p-8 md:p-12 flex flex-col justify-center">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-black mb-4 md:mb-6">Our Vision</h2>
-            <p className="text-sm md:text-base text-black leading-relaxed">
-              To become a globally recognized multi-industry brand, delivering excellence and innovation across every
-              business vertical we enter.
-            </p>
-          </div>
+<section className="bg-gradient-to-r from-cyan-300 to-white py-12">
+  <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      
+      {/* Vision */}
+      <div className="text-left">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+          Our Vision
+        </h2>
+        <p className="text-base md:text-lg text-gray-800 leading-relaxed">
+          To become a globally recognized multi-industry brand, delivering excellence 
+          and innovation across every business vertical we enter.
+        </p>
+      </div>
+      
+      {/* Mission */}
+      <div className="text-right">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+          Our Mission
+        </h2>
+        <p className="text-base md:text-lg text-gray-800 leading-relaxed">
+          To create world-class products combining Indian manufacturing strength 
+          with international quality benchmarks, expanding into diverse sectors 
+          with purpose-driven brands.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-          {/* Mission Section - Right side */}
-          <div className="md:w-1/2 bg-white p-8 md:p-12 flex flex-col justify-center">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-black mb-4 md:mb-6">Our Mission</h2>
-            <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              To create world-class products combining Indian manufacturing strength with international quality
-              benchmarks, expanding into diverse sectors with purpose-driven brands.
-            </p>
-          </div>
-        </div>
-      </section>
+
+
 
       {/* Sustainability Section */}
       <section className="py-8 md:py-12 bg-white">
@@ -611,68 +664,94 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Contact Form */}
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name*</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all"
-                    placeholder="Enter your first name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name*</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all"
-                    placeholder="Enter your last name"
-                  />
-                </div>
-              </div>
+    <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            First Name*
+          </label>
+          <input
+            type="text"
+            name="first_name"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Last Name*
+          </label>
+          <input
+            type="text"
+            name="last_name"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+      </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Gmail*</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number*</label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Gmail*
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number*
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+      </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Subject*</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all"
-                  placeholder="Enter subject"
-                />
-              </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Subject*
+        </label>
+        <input
+          type="text"
+          name="subject"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none"
+          placeholder="Enter subject"
+          required
+        />
+      </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Your Message*</label>
-                <textarea
-                  rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] focus:border-transparent outline-none transition-all resize-none"
-                  placeholder="Enter your message"
-                ></textarea>
-              </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Your Message*
+        </label>
+        <textarea
+          name="message"
+          rows={5}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2DD8E5] outline-none resize-none"
+          placeholder="Enter your message"
+          required
+        />
+      </div>
 
-              <Button className="bg-[#2DD8E5] hover:bg-[#25C4D1] text-white px-8 py-3 rounded-lg text-sm font-medium">
-                Send Message
-              </Button>
-            </div>
-
+      <button
+        type="submit"
+        className="bg-[#2DD8E5] hover:bg-[#25C4D1] text-white px-8 py-3 rounded-lg text-sm font-medium"
+      >
+        Send Message
+      </button>
+    </form>
             {/* Contact Information */}
             <div className="bg-gradient-to-r from-[#02B6C3] to-[#67F0FA] rounded-2xl p-8 text-white">
               <div className="space-y-8">
@@ -707,7 +786,7 @@ export default function HomePage() {
                     <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                       <Twitter size={20} className="text-white" />
                     </a>
-                    <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
+                    <a href="https://www.instagram.com/wipesindia?igsh=ZGdleGtsOXJuNTFv&utm_source=qr" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                       <Instagram size={20} className="text-white" />
                     </a>
                     <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
@@ -723,22 +802,27 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+{/* Map Section */}
+<section className="py-8 md:py-12 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4 md:px-6">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div className="h-64 md:h-96 relative">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3922.292727850894!2d75.3613904!3d11.8744779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba4381629ff6a7b%3A0xf26e66e08e6c6d2e!2sCaltex%20Junction%2C%20Kannur%2C%20Kerala%20670702!5e0!3m2!1sen!2sin!4v1693405473524!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="absolute inset-0 w-full h-full"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
-      {/* Map Section */}
-      <section className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="h-64 md:h-96 relative">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Wo696Ns8IxUrPV0rNB8aybeADSIUku.png"
-                alt="Map showing Caltex Junction, Kannur location"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/10"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Footer Section */}
       <footer className="bg-gradient-to-r from-[#67F0FA] to-[#02B6C3] text-[#000000]">
@@ -771,7 +855,7 @@ export default function HomePage() {
                 <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                   <Twitter size={20} className="text-white" />
                 </a>
-                <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
+                <a href="https://www.instagram.com/wipesindia?igsh=ZGdleGtsOXJuNTFv&utm_source=qr" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                   <Instagram size={20} className="text-white" />
                 </a>
                 <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
@@ -819,19 +903,21 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div>
-                <h4 className="text-sm font-medium mb-3">Get the latest information</h4>
-                <div className="flex">
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="flex-1 px-3 py-2 bg-white/20 border border-white/30 rounded-l-lg text-sm placeholder-white/70 focus:outline-none focus:bg-white/30"
-                  />
-                  <button className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-r-lg transition-colors">
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+    <div className="w-full max-w-sm">
+      <h4 className="text-lg font-semibold mb-3 text-black">
+        Get the latest information
+      </h4>
+      <div className="relative flex items-center">
+        <input
+          type="email"
+          placeholder="Email Address"
+          className="w-full px-4 py-3 rounded-full bg-[#06606742] text-black placeholder-black/60 focus:outline-none focus:bg-cyan-400/70 pr-14"
+        />
+        <button className="absolute right-1 bg-[#066067] hover:bg-cyan-800 text-white p-3 rounded-full transition-colors">
+          <Send className="w-4 h-4 rotate-45" /> 
+        </button>
+      </div>
+    </div>
             </div>
           </div>
         </div>
