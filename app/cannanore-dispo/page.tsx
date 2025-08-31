@@ -1,12 +1,15 @@
 "use client"
 
-import { ChevronRight, Menu, X, Send  } from "lucide-react"
+import { Menu, X, Send  } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import WhatsAppIcon from "@/lib/WhatsAppIcon";
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+
 
   return (
     <div className="min-h-screen">
@@ -286,9 +289,14 @@ is redefining disposable products by combining quality, performance, and sustain
     <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
       <Facebook size={20} className="text-white" />
     </a>
-    <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
-      <Twitter size={20} className="text-white" />
-    </a>
+<a
+  href="https://wa.me/917666957476?text=Hello%20I%20am%20interested!"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+>
+    <WhatsAppIcon size={20}  />
+</a>
     <a href="https://www.instagram.com/wipesindia?igsh=ZGdleGtsOXJuNTFv&utm_source=qr" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
       <Instagram size={20} className="text-white" />
     </a>

@@ -5,8 +5,9 @@ import { ChevronRight, ChevronDown, Menu, X, ChevronLeft, Send  } from "lucide-r
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import React, { useRef } from "react";
+import WhatsAppIcon from "@/lib/WhatsAppIcon";
 
 export default function HomePage() {
   const [open, setOpen] = useState(false)
@@ -59,21 +60,25 @@ export default function HomePage() {
   const galleryImages = [
     "/assets/bussiness-wipes.png",
     "/assets/gallery-2.png",
+    "/assets/gallery-6.png",
     "/assets/gallery-3.png",
     "/assets/gallery-4.png",
     "/assets/business-event.png",
     "/assets/bussiness-wipes.png",
     "/assets/gallery-2.png",
+    "/assets/gallery-6.png",
     "/assets/gallery-3.png",
     "/assets/gallery-4.png",
     "/assets/business-event.png",
     "/assets/bussiness-wipes.png",
     "/assets/gallery-2.png",
+    "/assets/gallery-6.png",
     "/assets/gallery-3.png",
     "/assets/gallery-4.png",
     "/assets/business-event.png",
     "/assets/bussiness-wipes.png",
     "/assets/gallery-2.png",
+    "/assets/gallery-6.png",
     "/assets/gallery-3.png",
     "/assets/gallery-4.png",
     "/assets/business-event.png",
@@ -231,7 +236,7 @@ export default function HomePage() {
                       Home
                     </Link>
                     <Link
-                      href="/about"
+                      href="#about"
                       className="text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors"
                     >
                       About Us
@@ -272,20 +277,20 @@ export default function HomePage() {
                     </div>
 
                     <Link
-                      href="/clients"
+                      href="#clients"
                       className="text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors"
                     >
                       Clients
                     </Link>
                     <Link
-                      href="/gallery"
+                      href="#gallery"
                       className="text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors"
                     >
                       Gallery
                     </Link>
-                    <Button className="bg-[#2DD8E5] hover:bg-[#25C4D1] text-white px-4 py-2 rounded-xl text-sm font-medium w-full">
-                      Contact
-                    </Button>
+                  <Link href="#contact" className="bg-[#2DD8E5] hover:bg-[#25C4D1] text-white px-3 lg:px-4 py-2 rounded-xl text-sm lg:text-base font-medium">
+                    Contact
+                  </Link>
                   </div>
                 </div>
               )}
@@ -783,9 +788,14 @@ export default function HomePage() {
                     <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                       <Facebook size={20} className="text-white" />
                     </a>
-                    <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
-                      <Twitter size={20} className="text-white" />
-                    </a>
+<a
+  href="https://wa.me/917666957476?text=Hello%20I%20am%20interested!"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+>
+    <WhatsAppIcon size={20}  />
+</a>
                     <a href="https://www.instagram.com/wipesindia?igsh=ZGdleGtsOXJuNTFv&utm_source=qr" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                       <Instagram size={20} className="text-white" />
                     </a>
@@ -852,9 +862,14 @@ export default function HomePage() {
                 <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                   <Facebook size={20} className="text-white" />
                 </a>
-                <a href="#" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
-                  <Twitter size={20} className="text-white" />
-                </a>
+<a
+  href="https://wa.me/917666957476?text=Hello%20I%20am%20interested!"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+>
+    <WhatsAppIcon size={20}  />
+</a>
                 <a href="https://www.instagram.com/wipesindia?igsh=ZGdleGtsOXJuNTFv&utm_source=qr" className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
                   <Instagram size={20} className="text-white" />
                 </a>
