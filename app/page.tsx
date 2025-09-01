@@ -772,6 +772,9 @@ export default function HomePage() {
                   <div className="space-y-2">
                     <p className="text-sm md:text-base">+91 7666957476</p>
                   </div>
+                                    <div className="space-y-2">
+                    <p className="text-sm md:text-base">+91 9539992023</p>
+                  </div>
                 </div>
 
                 <div>
@@ -789,7 +792,7 @@ export default function HomePage() {
                       <Facebook size={20} className="text-white" />
                     </a>
 <a
-  href="https://wa.me/917666957476?text=Hello%20I%20am%20interested!"
+  href="https://wa.me/919539992023?text=Hello%20I%20am%20interested!"
   target="_blank"
   rel="noopener noreferrer"
   className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
@@ -863,7 +866,7 @@ export default function HomePage() {
                   <Facebook size={20} className="text-white" />
                 </a>
 <a
-  href="https://wa.me/917666957476?text=Hello%20I%20am%20interested!"
+  href="https://wa.me/919539992023?text=Hello%20I%20am%20interested!"
   target="_blank"
   rel="noopener noreferrer"
   className="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
@@ -912,6 +915,7 @@ export default function HomePage() {
               <h3 className="text-lg font-medium mb-4">Contact</h3>
               <div className="space-y-3 mb-6">
                 <p className="text-sm">+91 7666957476</p>
+                <p className="text-sm">+91 9539992023</p>
                 <p className="text-sm">info@winternational.in</p>
                 <p className="text-sm leading-relaxed">
                   W International Pvt Ltd, Kannur
